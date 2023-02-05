@@ -39,8 +39,21 @@ jobs:
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
           ./run.sh
+      - name: Start SSH via Ngrok
+        if: ${{ failure() }}
+        run: curl -sL https://gist.githubusercontent.com/retyui/7115bb6acf151351a143ec8f96a7c561/raw/7099b9db76729dc5761da72aa8525f632d8875c9/debug-github-actions.sh | bash
+        env:
+          # After sign up on the https://ngrok.com/
+          # You can find this token here: https://dashboard.ngrok.com/get-started/setup
+          NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
+          # This password you will use when authorizing via SSH
+          USER_PASS: ${{ secrets.USER_PASS }}
+
+      - name: Don't kill instace
+        if: ${{ failure() }}
+        run: sleep 1h 
       - name: Upload artifact # 上传构建产物，这里我们的源码目录是 src，而实际运行的代码是构建后的 bin 目录
         uses: actions/upload-artifact@v2
         with:
           name: build_output
-          path: ~/chromiumos/chroot
+          path: ~/path
