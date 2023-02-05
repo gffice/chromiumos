@@ -11,6 +11,6 @@ cd ~/chromiumos
 sudo ~/bin/repo init -u https://chromium.googlesource.com/chromiumos/manifest -g minilayout
 sudo ~/bin/repo sync
 export BOARD=amd64-generic
-cros_sdk --exit
+#cros_sdk --exit
 #cros_sdk -- ./build_packages --board=${BOARD}
 #cros_sdk -- ./build_image --board=${BOARD}
